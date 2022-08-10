@@ -39,6 +39,28 @@ const DOWN_DIR = 40
 //initial direction for the snake
 let snakeCurrentDirection = RIGHT_DIR
 
+//make sure the user input is valid and change snake direction variable
+const changeDirection = newDirectionCode => {
+    if(newDirectionCode == snakeCurrentDirection) return;
+
+    if(newDirectionCode == LEFT_DIR && snakeCurrentDirection !== RIGHT_DIR){
+        snakeCurrentDirection = newDirectionCode
+    } else if(newDirectionCode == UP_DIR && snakeCurrentDirection !== DOWN_DIR){
+        snakeCurrentDirection = newDirectionCode
+    } else if(newDirectionCode == RIGHT_DIR && snakeCurrentDirection !== LEFT_DIR){
+        snakeCurrentDirection = newDirectionCode
+    } else if(newDirectionCode == DOWN_DIR && snakeCurrentDirection !== UP_DIR){
+        snakeCurrentDirection = newDirectionCode
+    }
+}
+
+//inital snake position to the center of the game board
+let currentHeadPosition = TOTAL_PIXEL_COUNT/2
+
+//set initial length
+let snakeLength = 200
+
+
 
 
 
