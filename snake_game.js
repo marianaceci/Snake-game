@@ -60,10 +60,62 @@ let currentHeadPosition = TOTAL_PIXEL_COUNT/2
 //set initial length
 let snakeLength = 200
 
+//start moving snake by comparison, wrap around to toher side of screen if needed
+const moveSnake = () => {
+    switch(snakeCurrentDirection){
+        case LEFT_DIR: //decrease location on the board
+            --currentHeadPosition
+            const isHeadAtLeft = currentHeadPosition % LINE_PIXEL_COUNT == LINE_PIXEL_COUNT - 1 || currentHeadPosition < 0 //check edge behavior with boolean
+            if(isHeadAtLeft) {
+                currentHeadPosition = currentHeadPosition + LINE_PIXEL_COUNT
+            }
+        break;
 
+        case RIGHT_DIR:
+            ++currentHeadPosition
+            const isHeadAtRight = currentHeadPosition % LINE_PIXEL_COUNT == 0
+            if(isHeadAtRight) {
+                currentHeadPosition = currentHeadPosition - LINE_PIXEL_COUNT
+            }
+        break;
 
+        case UP_DIR:
+            currentHeadPosition = currentHeadPosition - LINE_PIXEL_COUNT
+            const isHeadAtTop = currentHeadPosition < 0
+            if(isHeadAtTop) {
+                currentHeadPosition = currentHeadPosition + TOTAL_PIXEL_COUNT
+            }
+        break;
 
+        case DOWN_DIR:
+            currentHeadPosition = currentHeadPosition + LINE_PIXEL_COUNT
+            const isHeadAtBottom = currentHeadPosition > TOTAL_PIXEL_COUNT -1
+            if(isHeadAtBottom) {
+                currentHeadPosition = currentHeadPosition - TOTAL_PIXEL_COUNT
+            }
+        break;
+        default:
+        break;
+    }
 
+    //accessed the correct pixel within the html collection
+    let nextSnakeHeadPixel = gameBoardPixel[currentHeadPosition]
+    
+    //if snake intersect with itself, then the game ends
+    //if that pixel already has the body assigned
+    if(nextSnakeHeadPixel.classList.contains('snakeBodyPixel')){
+        clearInterval(moveSnakeInterval)
+        alert(`You have eaten ${totalFoodEaten} food and traveled ${totalDistanceTraveled} blocks.`)
+        window.location.reload() //restarts the game
+    } 
+
+    //assuming an empty pixel, add snake body styling
+    nextSnakeHeadPixel.classList.add('snakeBodyPixel')
+}
+
+createGameBoardPixels();
+createFood();
+let moveSnakeInterval = setInterval(moveSnake, 100)
 
 
 
