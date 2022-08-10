@@ -83,8 +83,8 @@ body {
 
     #onScreenControllers button {
         background-color: transparent;
-        width: 20vw;
-        height: 20vw;
+        width: 100px;
+        height: 100px;
         font-size: 4rem;
         border: none;
     }
